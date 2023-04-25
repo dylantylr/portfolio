@@ -139,18 +139,6 @@ import {
         "Conducted weekly office hours to work through questions students had.",
       ],
     },
-    {
-      title: "Server and Cashier",
-      company_name: "Carvel Ice Cream",
-      icon: carvel,
-      iconBg: "#383E56",
-      date: "October 2019 - August 2021",
-      points: [
-        "Ensured customer satisfaction while processing orders during busy hours.",
-        "Managed inventory of products and planned weekly orders.",
-        "Supervised other staff during shifts worked.",
-      ],
-    },
   ];
   
   const testimonials = [
