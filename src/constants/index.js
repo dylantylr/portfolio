@@ -209,7 +209,7 @@ import {
         },
       ],
       image: tripguide,
-      source_code_link: "https://github.com/",
+      source_code_link: "https://www.credly.com/badges/11e14ca9-608b-440b-a40a-d05b5d21af82/public_url",
     },
     {
       name: "Microsoft Certified: Azure Fundamentals",
@@ -230,7 +230,7 @@ import {
         },
       ],
       image: jobit,
-      source_code_link: "https://github.com/",
+      source_code_link: "https://www.credly.com/badges/94411b42-911d-4bd7-bca4-536ba7d701d4/public_url",
     },
   ];
   
