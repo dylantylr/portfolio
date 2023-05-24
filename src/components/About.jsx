@@ -55,7 +55,7 @@ const About = () => {
         of these fields and discover new ways to make a positive impact on the world.
       </motion.p>
 
-      <div className='mt-20 flex flex-wrap gap-10'>
+      <div className='mt-20 flex flex-wrap gap-10 place-content-center'>
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
