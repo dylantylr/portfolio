@@ -124,7 +124,7 @@ import {
       iconBg: "#383E56",
       date: "March 2023 - August 2023",
       points: [
-        "Worked with Senior & Jr. Developers to create a data visualization dashboard using Tableau, SQL, and Python to enhance business metrics analysis and decision-making processes.",
+        "Collaborated with a senior developer to design and develop a dynamic Tableau workbook featuring interactive dashboards, showcasing comprehensive insights into the company’s Tableau Server content.",
       ],
     },
     {
