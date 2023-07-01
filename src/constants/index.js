@@ -125,7 +125,7 @@ import {
       date: "March 2023 - August 2023",
       points: [
         "Collaborated with a senior developer to design and develop a dynamic Tableau workbook featuring interactive dashboards, showcasing comprehensive insights into the company’s Tableau Server content.",
-        "Developed solutions with Python, SQL, Tableau, Microstrategy, Business Objects, and Dataiku.",
+        "Developed solutions with Python, SQL, Snowflake, Tableau, Microstrategy, Business Objects, and Dataiku.",
       ],
     },
     {
