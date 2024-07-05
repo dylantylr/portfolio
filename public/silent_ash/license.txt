@@ -1,11 +1,8 @@
 Model Information:
-* title:	Silent Ash
-* source:	https://sketchfab.com/3d-models/silent-ash-bc44272e8c1047148b33c913e659fcfa
-* author:	maxpanysh (https://sketchfab.com/maxpanysh)
+* title:	Mash Burnedead - Mashle
+* source:	https://sketchfab.com/3d-models/mash-burnedead-mashle-cd44a3b02b03481d816a15e4570286cb
+* author:	ridho.mnf (https://sketchfab.com/ridho.mnf)
 
 Model License:
-* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
-* requirements:	Author must be credited. Commercial use is allowed.
-
-If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Silent Ash" (https://sketchfab.com/3d-models/silent-ash-bc44272e8c1047148b33c913e659fcfa) by maxpanysh (https://sketchfab.com/maxpanysh) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* license type:	SKETCHFAB Editorial (https://sketchfab.com/licenses)
+* requirements:	Use only in connection with events that are newsworthy or of public interest
