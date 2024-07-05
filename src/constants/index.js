@@ -118,6 +118,14 @@ import {
   
   const experiences = [
     {
+      title: "Software Engineer Intern",
+      company_name: "Atlassian",
+      icon: carvel,
+      iconBg: "#383E56",
+      date: "May 2024 - August 2024",
+      points: ["Currently working on this internship."],
+    },
+    {
       title: "Digital Technology Intern/Co-op",
       company_name: "Sherwin Williams",
       icon: sherwin,
