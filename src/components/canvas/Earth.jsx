@@ -12,10 +12,14 @@ const Earth = () => {
   useEffect(() => {
     if (animations.length > 0) {
       mixer.current = new THREE.AnimationMixer(scene);
-      animations.forEach((clip) => {
-        const action = mixer.current.clipAction(clip);
-        action.play();
-      });
+      //animations.forEach((clip) => {
+      //  console.log(clip);
+      //  const action = mixer.current.clipAction(clip);
+      //  action.play();
+      //});
+      const clip = THREE.AnimationClip.findByName(animations, "Dance");
+      const action = mixer.current.clipAction(clip);
+      action.play();
     }
   }, [animations, scene]);
 
