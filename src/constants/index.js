@@ -16,9 +16,9 @@ import {
     sql,
     cpp,
     python,
+    atlassian,
     sherwin,
     rpi,
-    carvel,
     carrent,
     jobit,
     tripguide,
@@ -26,7 +26,7 @@ import {
     shuzo,
     denzel,
   } from "../assets";
-  
+
   export const navLinks = [
     {
       id: "about",
@@ -41,26 +41,26 @@ import {
       title: "Contact",
     },
   ];
-  
+
   const services = [
     {
-      title: "Student",
-      icon: web,
-    },
-    {
       title: "Software Engineer",
-      icon: mobile,
+      icon: web,
     },
     {
       title: "Backend Developer",
       icon: backend,
     },
     {
+      title: "Platform & Cloud",
+      icon: mobile,
+    },
+    {
       title: "Data Analyst",
       icon: creator,
     },
   ];
-  
+
   const technologies = [
     {
       name: "Python",
@@ -115,8 +115,33 @@ import {
       icon: docker,
     },
   ];
-  
+
   const experiences = [
+    {
+      title: "Software Engineer",
+      company_name: "Atlassian",
+      icon: atlassian,
+      iconBg: "#383E56",
+      date: "July 2025 - Present",
+      points: [
+        "Cut regulated-cloud (FedRAMP) service onboarding by 83% - from 60 developer-days to under 10 - by co-developing an LLM-based AI-agent automation pilot, since adopted org-wide as the default onboarding workflow.",
+        "Drove adoption of a centralized environment-configuration platform across an 80GB+ frontend monorepo, authoring and merging 125+ pull requests to consolidate scattered, error-prone checks onto a shared SDK.",
+        "Designed and built a Java backend SDK adopted across multiple services, giving them one consistent interface for environment-aware decisions with automated releases through built-in CI/CD pipelines.",
+        "Accelerated go-live for government and enterprise customers, provisioning production and staging environments and resolving onboarding across SSO/IdP integration, domain verification, and org-admin setup.",
+      ],
+    },
+    {
+      title: "Software Engineering Intern",
+      company_name: "Atlassian",
+      icon: atlassian,
+      iconBg: "#383E56",
+      date: "May 2024 - August 2024",
+      points: [
+        "Owned an end-to-end feature from design through implementation, testing, and rollout: a CLI-driven automation for cleaning up Bring Your Own Key (BYOK) encryption policies.",
+        "Reclaimed up to $14K per month in RDS infrastructure spend by automating deletion of stale encryption policies across test environments.",
+        "Designed and implemented a RESTful API in Kotlin and Spring Boot for policy retrieval and deletion, backed by a Go command-line tool with unit and acceptance tests.",
+      ],
+    },
     {
       title: "Digital Technology Intern/Co-op",
       company_name: "Sherwin Williams",
@@ -124,8 +149,9 @@ import {
       iconBg: "#383E56",
       date: "March 2023 - August 2023",
       points: [
-        "Collaborated with a senior developer to design and develop a dynamic Tableau workbook featuring interactive dashboards, showcasing comprehensive insights into the company’s Tableau Server content.",
-        "Developed solutions with Python, SQL, Snowflake, Tableau, Microstrategy, Business Objects, and Dataiku.",
+        "Built a dynamic Tableau workbook analyzing the company's entire Tableau Server content - hundreds of dashboards and datasets - to deliver enterprise-wide usage insights.",
+        "Consolidated BI tool documentation and tutorials into a centralized SharePoint hub, streamlining onboarding for the Enterprise Data Organization.",
+        "Worked across Python, SQL, Snowflake, Tableau, MicroStrategy, and Dataiku.",
       ],
     },
     {
@@ -136,12 +162,12 @@ import {
       date: "January 2022 - December 2022",
       points: [
         "Educated 50 undergraduate students weekly on the fundamentals of CAD software.",
-        "Provided comprehensive feedback on students’ assignments.",
+        "Provided comprehensive feedback on students' assignments.",
         "Conducted weekly office hours to work through questions students had.",
       ],
     },
   ];
-  
+
   const testimonials = [
     {
       testimonial:
@@ -168,7 +194,7 @@ import {
       image: denzel,
     },
   ];
-  
+
   const projects = [
     {
       name: "Meta Back-End Developer Professional Certificate",
@@ -234,5 +260,5 @@ import {
       source_code_link: "https://www.credly.com/badges/94411b42-911d-4bd7-bca4-536ba7d701d4/public_url",
     },
   ];
-  
+
   export { services, technologies, experiences, testimonials, projects };

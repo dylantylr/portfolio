@@ -26,6 +26,7 @@ import cpp from "./tech/cpp.png";
 import python from "./tech/python.png";
 
 import carvel from "./company/carvel.png";
+import atlassian from "./company/atlassian.svg";
 import sherwin from "./company/sherwin.png";
 import rpi from "./company/rpi.png";
 
@@ -56,6 +57,7 @@ export {
   cpp,
   python,
   carvel,
+  atlassian,
   sherwin,
   rpi,
   carrent,

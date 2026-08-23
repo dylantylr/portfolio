@@ -19,37 +19,50 @@ const ProjectCard = ({
   return (
     <motion.div variants={fadeIn("up", "spring", index * 0.5, 0.75)}>
       <Tilt
-        options={{
-          max: 45,
-          scale: 1,
-          speed: 450,
-        }}
+        tiltMaxAngleX={45}
+        tiltMaxAngleY={45}
+        scale={1}
+        transitionSpeed={450}
         className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
       >
         <div className='relative w-full h-[230px]'>
           <img
             src={image}
-            alt='project_image'
+            alt={`${name} certificate`}
+            width={320}
+            height={230}
+            loading='lazy'
+            decoding='async'
             className='w-full h-full object-cover rounded-2xl'
           />
 
           <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
-            <div
-              onClick={() => window.open(source_code_link, "_blank")}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center cursor-pointer'
+            <a
+              href={source_code_link}
+              target='_blank'
+              rel='noopener noreferrer'
+              aria-label={`View the ${name} credential (opens in a new tab)`}
+              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary'
             >
               <img
                 src={website}
-                alt='source code'
+                alt=''
+                aria-hidden='true'
+                width={20}
+                height={20}
+                loading='lazy'
+                decoding='async'
                 className='w-1/2 h-1/2 object-contain'
               />
-            </div>
+            </a>
           </div>
         </div>
 
         <div className='mt-5'>
-          <h3 className='text-white font-bold text-[24px]'>{name}</h3>
-          <p className='mt-2 text-secondary text-[14px]'>{description}</p>
+          <h3 className='text-white font-bold text-[24px] text-balance'>{name}</h3>
+          <p className='mt-2 text-secondary text-[14px] text-pretty break-words'>
+            {description}
+          </p>
         </div>
 
         <div className='mt-4 flex flex-wrap gap-2'>
@@ -72,15 +85,18 @@ const Works = () => {
     <>
       <motion.div variants={textVariant()}>
         <p className={`${styles.sectionSubText} `}>My work</p>
-        <h2 className={`${styles.sectionHeadText}`}>Licenses and Certifications.</h2>
+        <h2 className={`${styles.sectionHeadText} text-balance`}>
+          Licenses and Certifications.
+        </h2>
       </motion.div>
 
       <div className='w-full flex'>
         <motion.p
           variants={fadeIn("", "", 0.1, 1)}
-          className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px]'
+          className='mt-3 text-secondary text-[17px] max-w-3xl leading-[30px] text-pretty'
         >
-          The following are some of the certifications I have earned to enhance my skills as a software engineer.
+          The following are some of the certifications I have earned to enhance
+          my skills as a software engineer.
         </motion.p>
       </div>
 
@@ -93,4 +109,4 @@ const Works = () => {
   );
 };
 
-export default SectionWrapper(Works, "");
+export default SectionWrapper(Works, "certifications");

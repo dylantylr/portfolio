@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
 
 import CanvasLoader from "../Loader";
+import CanvasErrorBoundary from "../CanvasErrorBoundary";
 
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("./gaming_laptop/scene.gltf");
@@ -21,9 +22,12 @@ const Computers = ({ isMobile }) => {
       <pointLight intensity={1} />
       <primitive
         object={computer.scene}
-        //1.5 : 1.55
         scale={isMobile ? 0.01 : 0.015}
-        position={isMobile ? [-2, -1.25, -2.2] : [-2, -2, -1.5]}
+        // The camera sits off to one side, so a world-space offset that reads as
+        // centered on a wide viewport swings far right in portrait, where the
+        // horizontal field of view is much narrower. z = -0.714 puts the model
+        // bounding-box centre on the camera axis, centering it at any aspect.
+        position={isMobile ? [-2, -1.25, -0.714] : [-2, -2, -1.5]}
         rotation={[-0.01, -0.5, -0.1]}
       />
     </mesh>
@@ -55,7 +59,9 @@ const ComputersCanvas = () => {
   }, []);
 
   return (
+    <CanvasErrorBoundary>
     <Canvas
+      aria-hidden='true'
       frameloop='demand'
       shadows
       dpr={[1, 2]}
@@ -73,6 +79,7 @@ const ComputersCanvas = () => {
 
       <Preload all />
     </Canvas>
+    </CanvasErrorBoundary>
   );
 };
 

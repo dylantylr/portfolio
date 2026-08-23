@@ -18,28 +18,42 @@ const FeedbackCard = ({
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
     className='bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full'
   >
-    <p className='text-white font-black text-[48px]'>"</p>
+    <figure>
+      <p aria-hidden='true' className='text-white font-black text-[48px]'>
+        &ldquo;
+      </p>
 
-    <div className='mt-1'>
-      <p className='text-white tracking-wider text-[18px]'>{testimonial}</p>
+      <div className='mt-1'>
+        <blockquote className='text-white tracking-wider text-[18px] text-pretty break-words'>
+          {testimonial}
+        </blockquote>
 
-      <div className='mt-7 flex justify-between items-center gap-1'>
-        <div className='flex-1 flex flex-col'>
-          <p className='text-white font-medium text-[16px]'>
-            <span className='blue-text-gradient'>@</span> {name}
-          </p>
-          <p className='mt-1 text-secondary text-[12px]'>
-            {designation} {company}
-          </p>
-        </div>
+        <figcaption className='mt-7 flex justify-between items-center gap-1'>
+          <div className='flex-1 min-w-0 flex flex-col'>
+            <p className='text-white font-medium text-[16px] truncate'>
+              <span aria-hidden='true' className='blue-text-gradient'>
+                @
+              </span>{" "}
+              {name}
+            </p>
+            <p className='mt-1 text-secondary text-[12px] truncate'>
+              {designation} {company}
+            </p>
+          </div>
 
-        <img
-          src={image}
-          alt={`feedback_by-${name}`}
-          className='w-10 h-10 rounded-full object-cover'
-        />
+          <img
+            src={image}
+            alt=''
+            aria-hidden='true'
+            width={40}
+            height={40}
+            loading='lazy'
+            decoding='async'
+            className='w-10 h-10 rounded-full object-cover shrink-0'
+          />
+        </figcaption>
       </div>
-    </div>
+    </figure>
   </motion.div>
 );
 
@@ -51,10 +65,12 @@ const Feedbacks = () => {
       >
         <motion.div variants={textVariant()}>
           <p className={styles.sectionSubText}>Inspiration</p>
-          <h2 className={styles.sectionHeadText}>Quotes.</h2>
+          <h2 className={`${styles.sectionHeadText} text-balance`}>Quotes.</h2>
         </motion.div>
       </div>
-      <div className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7 place-content-center`}>
+      <div
+        className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7 place-content-center`}
+      >
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
         ))}
@@ -63,4 +79,4 @@ const Feedbacks = () => {
   );
 };
 
-export default SectionWrapper(Feedbacks, "");
+export default SectionWrapper(Feedbacks, "quotes");

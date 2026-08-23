@@ -7,35 +7,73 @@ import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
 
-// template_nyb91wf
-// service_2f15be2
-// 46yGc7bo2WMem3Fy1
+const fieldClass =
+  "bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg border-none font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-black-100";
 
 const Contact = () => {
   const formRef = useRef();
+  const fieldRefs = {
+    name: useRef(null),
+    email: useRef(null),
+    message: useRef(null),
+  };
+
   const [form, setForm] = useState({
     name: "",
     email: "",
     message: "",
   });
 
+  const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
-    const { target } = e;
-    const { name, value } = target;
+    const { name, value } = e.target;
 
-    setForm({
-      ...form,
-      [name]: value,
-    });
+    setForm((previous) => ({ ...previous, [name]: value }));
+    setErrors((previous) => ({ ...previous, [name]: undefined }));
+  };
+
+  const validate = () => {
+    const nextErrors = {};
+
+    if (!form.name.trim()) {
+      nextErrors.name = "Enter your name so I know who is writing.";
+    }
+
+    if (!form.email.trim()) {
+      nextErrors.email = "Enter your email so I can reply.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      nextErrors.email = "Enter a valid email address, like jane@example.com.";
+    }
+
+    if (!form.message.trim()) {
+      nextErrors.message = "Enter a message before sending.";
+    }
+
+    return nextErrors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const nextErrors = validate();
+    setErrors(nextErrors);
+
+    // Move focus to the first field that needs attention.
+    const firstInvalid = ["name", "email", "message"].find(
+      (field) => nextErrors[field]
+    );
+
+    if (firstInvalid) {
+      setStatus("");
+      fieldRefs[firstInvalid].current?.focus();
+      return;
+    }
+
     setLoading(true);
-
-
+    setStatus("Sending your message…");
 
     emailjs
       .send(
@@ -53,7 +91,7 @@ const Contact = () => {
       .then(
         () => {
           setLoading(false);
-          alert("Thank you. I will get back to you as soon as possible.");
+          setStatus("Thank you. I will get back to you as soon as possible.");
 
           setForm({
             name: "",
@@ -65,10 +103,19 @@ const Contact = () => {
           setLoading(false);
           console.error(error);
 
-          alert("Ahh, something went wrong. Please try again.");
+          setStatus(
+            "Something went wrong and your message was not sent. Please try again, or email dylnbtylr@gmail.com directly."
+          );
         }
       );
   };
+
+  const renderError = (field) =>
+    errors[field] ? (
+      <span id={`${field}-error`} className='mt-2 text-[14px] text-[#ff9d9d]'>
+        {errors[field]}
+      </span>
+    ) : null;
 
   return (
     <div
@@ -79,53 +126,79 @@ const Contact = () => {
         className='flex-[0.75] bg-black-100 p-8 rounded-2xl'
       >
         <p className={styles.sectionSubText}>Get in touch</p>
-        <h3 className={styles.sectionHeadText}>Contact.</h3>
+        <h2 className={styles.sectionHeadText}>Contact.</h2>
 
         <form
           ref={formRef}
           onSubmit={handleSubmit}
+          noValidate
           className='mt-12 flex flex-col gap-8'
         >
           <label className='flex flex-col'>
             <span className='text-white font-medium mb-4'>Your Name</span>
             <input
+              ref={fieldRefs.name}
               type='text'
               name='name'
+              autoComplete='name'
               value={form.name}
               onChange={handleChange}
-              placeholder="What's your name?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              aria-invalid={errors.name ? "true" : undefined}
+              aria-describedby={errors.name ? "name-error" : undefined}
+              placeholder='e.g. Jane Doe'
+              className={fieldClass}
             />
+            {renderError("name")}
           </label>
+
           <label className='flex flex-col'>
-            <span className='text-white font-medium mb-4'>Your email</span>
+            <span className='text-white font-medium mb-4'>Your Email</span>
             <input
+              ref={fieldRefs.email}
               type='email'
               name='email'
+              inputMode='email'
+              autoComplete='email'
+              spellCheck='false'
+              autoCapitalize='none'
               value={form.email}
               onChange={handleChange}
-              placeholder="What's your email?"
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              aria-invalid={errors.email ? "true" : undefined}
+              aria-describedby={errors.email ? "email-error" : undefined}
+              placeholder='e.g. jane@example.com'
+              className={fieldClass}
             />
+            {renderError("email")}
           </label>
+
           <label className='flex flex-col'>
             <span className='text-white font-medium mb-4'>Your Message</span>
             <textarea
+              ref={fieldRefs.message}
               rows={7}
               name='message'
+              autoComplete='off'
               value={form.message}
               onChange={handleChange}
-              placeholder='Your message...'
-              className='bg-tertiary py-4 px-6 placeholder:text-secondary text-white rounded-lg outline-none border-none font-medium'
+              aria-invalid={errors.message ? "true" : undefined}
+              aria-describedby={errors.message ? "message-error" : undefined}
+              placeholder='Your message…'
+              className={fieldClass}
             />
+            {renderError("message")}
           </label>
 
           <button
             type='submit'
-            className='bg-tertiary py-3 px-8 rounded-xl outline-none w-fit text-white font-bold shadow-md shadow-primary'
+            disabled={loading}
+            className='bg-tertiary py-3 px-8 rounded-xl w-fit text-white font-bold shadow-md shadow-primary touch-manipulation disabled:cursor-not-allowed disabled:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-black-100'
           >
-            {loading ? "Sending..." : "Send"}
+            {loading ? "Sending…" : "Send Message"}
           </button>
+
+          <p aria-live='polite' className='text-white text-[14px] min-h-[20px]'>
+            {status}
+          </p>
         </form>
       </motion.div>
 

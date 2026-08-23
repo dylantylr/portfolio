@@ -12,9 +12,11 @@ import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
-const ExperienceCard = ({ experience }) => {
+const ExperienceCard = ({ experience, index }) => {
   return (
     <VerticalTimelineElement
+      // The library renders an invalid id="" unless one is supplied.
+      id={`experience-${index}`}
       contentStyle={{
         background: "#1d1836",
         color: "#fff",
@@ -26,7 +28,12 @@ const ExperienceCard = ({ experience }) => {
         <div className='flex justify-center items-center w-full h-full'>
           <img
             src={experience.icon}
-            alt={experience.company_name}
+            alt=""
+            aria-hidden="true"
+            width={36}
+            height={36}
+            loading="lazy"
+            decoding="async"
             className='w-[60%] h-[60%] object-contain'
           />
         </div>
@@ -73,6 +80,7 @@ const Experience = () => {
           {experiences.map((experience, index) => (
             <ExperienceCard
               key={`experience-${index}`}
+              index={index}
               experience={experience}
             />
           ))}

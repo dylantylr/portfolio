@@ -1,17 +1,22 @@
-import { BrowserRouter } from "react-router-dom";
-
 import { About, Contact, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
-
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <div className="relative z-0 bg-primary">
-        <div className='relative bg-cover bg-no-repeat bg-center'>
-          <StarsCanvas />
-          <Navbar />
-          <Hero />
-        </div>
+    <div className="relative z-0 bg-primary">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:font-bold focus:text-primary"
+      >
+        Skip to main content
+      </a>
+
+      <div className='relative bg-cover bg-no-repeat bg-center'>
+        <StarsCanvas />
+        <Navbar />
+        <Hero />
+      </div>
+
+      <main id="main-content">
         <About />
         <Experience />
         <Tech />
@@ -20,9 +25,9 @@ const App = () => {
         <div className="relative z-0">
           <Contact />
         </div>
-      </div>
-    </BrowserRouter>
-  )
-}
+      </main>
+    </div>
+  );
+};
 
-export default App
+export default App;

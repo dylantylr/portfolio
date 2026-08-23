@@ -23,5 +23,13 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // text-wrap utilities ship in Tailwind 3.4; this project is on 3.3.
+    function ({ addUtilities }) {
+      addUtilities({
+        ".text-balance": { "text-wrap": "balance" },
+        ".text-pretty": { "text-wrap": "pretty" },
+      });
+    },
+  ],
 };
