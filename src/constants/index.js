@@ -42,14 +42,12 @@ import {
     {
       id: "email",
       title: "Email",
-      detail: "dylnbtylr@gmail.com",
       href: "mailto:dylnbtylr@gmail.com",
       external: false,
     },
     {
       id: "linkedin",
       title: "LinkedIn",
-      detail: "linkedin.com/in/dylntylr",
       href: "https://www.linkedin.com/in/dylntylr",
       external: true,
     },

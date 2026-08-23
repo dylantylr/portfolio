@@ -51,7 +51,7 @@ const ResumeButton = ({ className = "" }) => (
   </a>
 );
 
-const ContactLink = ({ link, onNavigate, showDetail = false, className = "" }) => (
+const ContactLink = ({ link, onNavigate, className = "" }) => (
   <a
     href={link.href}
     onClick={onNavigate}
@@ -59,10 +59,7 @@ const ContactLink = ({ link, onNavigate, showDetail = false, className = "" }) =
     aria-label={link.external ? `${link.title} (opens in a new tab)` : link.title}
     className={`touch-manipulation ${focusRing} ${className}`}
   >
-    <span className='block'>{link.title}</span>
-    {showDetail ? (
-      <span className='block text-[13px] text-secondary'>{link.detail}</span>
-    ) : null}
+    {link.title}
   </a>
 );
 
@@ -198,14 +195,13 @@ const Navbar = () => {
               <div
                 id='contact-menu'
                 hidden={!contactOpen}
-                className='absolute right-0 top-full mt-3 min-w-[220px] rounded-xl black-gradient p-3 shadow-card'
+                className='absolute right-0 top-full mt-3 min-w-[150px] rounded-xl black-gradient p-3 shadow-card'
               >
                 <ul className='list-none flex flex-col gap-1'>
                   {contactLinks.map((link) => (
                     <li key={link.id}>
                       <ContactLink
                         link={link}
-                        showDetail
                         onNavigate={() => setContactOpen(false)}
                         className='block rounded-lg px-3 py-2 text-[16px] font-medium text-white hover:bg-white/10'
                       />
