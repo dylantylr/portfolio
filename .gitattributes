@@ -1,0 +1,2 @@
+# The published CNAME must never gain a CR, or domain validation fails.
+/public/CNAME text eol=lf
