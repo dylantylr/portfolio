@@ -3,10 +3,25 @@ import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 
 import { styles } from "../styles";
-import { website } from "../assets";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+
+const ExternalLinkIcon = () => (
+  <svg
+    aria-hidden='true'
+    viewBox='0 0 20 20'
+    className='w-4 h-4 shrink-0'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <path d='M8 5H5.5A1.5 1.5 0 0 0 4 6.5v8A1.5 1.5 0 0 0 5.5 16h8a1.5 1.5 0 0 0 1.5-1.5V12' />
+    <path d='M12 4h4v4M16 4l-6.5 6.5' />
+  </svg>
+);
 
 const ProjectCard = ({
   index,
@@ -23,58 +38,58 @@ const ProjectCard = ({
         tiltMaxAngleY={45}
         scale={1}
         transitionSpeed={450}
-        className='bg-tertiary p-5 rounded-2xl sm:w-[360px] w-full'
+        className='sm:w-[360px] w-full'
       >
-        <div className='relative w-full h-[230px]'>
-          <img
-            src={image}
-            alt={`${name} certificate`}
-            width={320}
-            height={230}
-            loading='lazy'
-            decoding='async'
-            className='w-full h-full object-cover rounded-2xl'
-          />
-
-          <div className='absolute inset-0 flex justify-end m-3 card-img_hover'>
-            <a
-              href={source_code_link}
-              target='_blank'
-              rel='noopener noreferrer'
-              aria-label={`View the ${name} credential (opens in a new tab)`}
-              className='black-gradient w-10 h-10 rounded-full flex justify-center items-center touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary'
-            >
-              <img
-                src={website}
-                alt=''
-                aria-hidden='true'
-                width={20}
-                height={20}
-                loading='lazy'
-                decoding='async'
-                className='w-1/2 h-1/2 object-contain'
-              />
-            </a>
+        {/* The whole card is the link, so there is nothing interactive nested
+            inside it. aria-label keeps the accessible name short. */}
+        <a
+          href={source_code_link}
+          target='_blank'
+          rel='noopener noreferrer'
+          aria-label={`${name} - view credential (opens in a new tab)`}
+          className='group flex h-full flex-col bg-tertiary p-5 rounded-2xl ring-1 ring-white/5 transition duration-300 hover:ring-[#915EFF] hover:shadow-card touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-primary'
+        >
+          <div className='relative w-full h-[230px]'>
+            <img
+              src={image}
+              alt=''
+              aria-hidden='true'
+              width={320}
+              height={230}
+              loading='lazy'
+              decoding='async'
+              className='w-full h-full object-cover rounded-2xl'
+            />
           </div>
-        </div>
 
-        <div className='mt-5'>
-          <h3 className='text-white font-bold text-[24px] text-balance'>{name}</h3>
-          <p className='mt-2 text-secondary text-[14px] text-pretty break-words'>
-            {description}
-          </p>
-        </div>
-
-        <div className='mt-4 flex flex-wrap gap-2'>
-          {tags.map((tag) => (
-            <p
-              key={`${name}-${tag.name}`}
-              className={`text-[14px] ${tag.color}`}
-            >
-              #{tag.name}
+          <div className='mt-5'>
+            <h3 className='text-white font-bold text-[24px] text-balance'>
+              {name}
+            </h3>
+            <p className='mt-2 text-secondary text-[14px] text-pretty break-words'>
+              {description}
             </p>
-          ))}
-        </div>
+          </div>
+
+          <div className='mt-4 flex flex-wrap gap-2'>
+            {tags.map((tag) => (
+              <p
+                key={`${name}-${tag.name}`}
+                className={`text-[14px] ${tag.color}`}
+              >
+                #{tag.name}
+              </p>
+            ))}
+          </div>
+
+          <span
+            aria-hidden='true'
+            className='mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-secondary transition-colors duration-300 group-hover:text-white'
+          >
+            View credential
+            <ExternalLinkIcon />
+          </span>
+        </a>
       </Tilt>
     </motion.div>
   );
@@ -100,7 +115,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7 place-content-center'>
+      <div className='mt-20 flex flex-wrap gap-7 place-content-center items-stretch'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}
