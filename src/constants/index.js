@@ -36,11 +36,28 @@ import {
       id: "work",
       title: "Work",
     },
+  ];
+
+  export const contactLinks = [
     {
-      id: "contact",
-      title: "Contact",
+      id: "email",
+      title: "Email",
+      detail: "dylnbtylr@gmail.com",
+      href: "mailto:dylnbtylr@gmail.com",
+      external: false,
+    },
+    {
+      id: "linkedin",
+      title: "LinkedIn",
+      detail: "linkedin.com/in/dylntylr",
+      href: "https://www.linkedin.com/in/dylntylr",
+      external: true,
     },
   ];
+
+  // Lives in public/, so the path stays relative to work under the
+  // /portfolio/ base path on GitHub Pages.
+  export const resumeUrl = "./Dylan_Taylor_Resume.pdf";
 
   const services = [
     {

@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emailjs/browser": "^3.11.0",
     "@react-three/drei": "^9.65.5",
     "@react-three/fiber": "^8.12.2",
     "framer-motion": "^10.12.4",
