@@ -1,4 +1,4 @@
-import { About, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas } from "./components";
+import { About, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas, EarthCanvas } from "./components";
 
 const App = () => {
   return (
@@ -22,6 +22,15 @@ const App = () => {
         <Tech />
         <Works />
         <Feedbacks />
+
+        {/* Decorative sign-off. The model spins on its own; the canvas is
+            already hidden from assistive tech. */}
+        <div
+          aria-hidden="true"
+          className="w-full h-[350px] md:h-[500px] mt-4"
+        >
+          <EarthCanvas />
+        </div>
       </main>
     </div>
   );
