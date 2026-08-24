@@ -10,7 +10,7 @@ talks to the worker; only the worker talks to Google.
 
 - Accepts `POST` with `{ message, history }` from an allowlisted origin.
 - Prepends a system instruction containing Dylan's professional briefing.
-- Calls `gemini-3.6-flash` and returns `{ reply }`.
+- Calls `gemini-3.5-flash-lite` and returns `{ reply }`.
 - Rejects requests from any origin not in `ALLOWED_ORIGINS` (`src/index.js`).
 - Caps message length (600 chars) and history (12 turns).
 - Optionally rate limits per IP when a KV namespace is bound.
@@ -114,3 +114,20 @@ VITE_ASSISTANT_URL=http://localhost:8787
 ```bash
 npx wrangler tail
 ```
+
+## Free tier quota
+
+Flash and Flash Lite have very different free allowances. Lite is the right
+choice for this:
+
+| Model | Requests/min | Requests/day |
+| --- | --- | --- |
+| Gemini 3.6 Flash | 5 | 20 |
+| Gemini 3.5 Flash Lite | 15 | 500 |
+
+Live usage is at https://aistudio.google.com/rate-limit
+
+A "used up its free quota for today" answer means the daily cap is gone until it
+resets. Waiting does not help; the model has to change or the plan has to be
+paid. A "answering a lot of questions right now" answer is the per-minute limit
+and does clear on its own.

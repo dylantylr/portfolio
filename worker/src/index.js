@@ -15,6 +15,9 @@ const RATE_LIMIT = { windowSeconds: 3600, maxRequests: 40 };
 const MAX_MESSAGE_CHARS = 600;
 const MAX_HISTORY_TURNS = 12;
 
+// How long we are willing to stall a request waiting out a per-minute 429.
+const MAX_RETRY_WAIT_SECONDS = 12;
+
 const json = (body, status, origin) =>
   new Response(JSON.stringify(body), {
     status,
@@ -128,7 +131,7 @@ export default {
       );
     }
 
-    const model = env.GEMINI_MODEL || "gemini-3.6-flash";
+    const model = env.GEMINI_MODEL || "gemini-3.5-flash-lite";
     const endpoint =
       `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
@@ -145,9 +148,8 @@ export default {
       },
     };
 
-    let upstream;
-    try {
-      upstream = await fetch(endpoint, {
+    const call = () =>
+      fetch(endpoint, {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -155,18 +157,45 @@ export default {
         },
         body: JSON.stringify(body),
       });
+
+    let upstream;
+    let detail = "";
+
+    try {
+      upstream = await call();
+
+      // A burst of quick questions can trip the per-minute limit. Google sends
+      // a retryDelay for those, so absorb a short wait rather than erroring.
+      // The daily cap comes back with no usable delay: retrying cannot help,
+      // so fall straight through to the error.
+      if (upstream.status === 429) {
+        detail = await upstream.text().catch(() => "");
+        const seconds = Number(
+          /"retryDelay":\s*"(\d+(?:\.\d+)?)s"/.exec(detail)?.[1]
+        );
+
+        if (Number.isFinite(seconds) && seconds <= MAX_RETRY_WAIT_SECONDS) {
+          await new Promise((resolve) => setTimeout(resolve, seconds * 1000 + 250));
+          upstream = await call();
+          detail = "";
+        }
+      }
     } catch {
       return json({ error: "Could not reach the assistant." }, 502, origin);
     }
 
     if (!upstream.ok) {
-      const detail = await upstream.text().catch(() => "");
+      if (!detail) detail = await upstream.text().catch(() => "");
       console.error("Gemini error", upstream.status, detail.slice(0, 500));
 
+      const daily = /per day|PerDay|generate_content_free_tier_requests/.test(detail);
+
       const error =
-        upstream.status === 429
-          ? "The assistant is busy right now. Please try again in a moment."
-          : "The assistant could not answer that. Please try again.";
+        upstream.status !== 429
+          ? "The assistant could not answer that. Please try again."
+          : daily
+          ? "The assistant has used up its free quota for today. Please use the Email or LinkedIn buttons above to reach Dylan directly."
+          : "The assistant is answering a lot of questions right now. Please wait a moment and ask again.";
 
       return json({ error }, 502, origin);
     }
