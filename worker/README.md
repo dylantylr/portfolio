@@ -15,38 +15,69 @@ talks to the worker; only the worker talks to Google.
 - Caps message length (600 chars) and history (12 turns).
 - Optionally rate limits per IP when a KV namespace is bound.
 
+## Every wrangler command must run from this directory
+
+Wrangler finds its config relative to the current working directory. Run it from
+the repo root and it fails, because it picks up the site's `vite.config.js` and
+tries to parse that instead:
+
+```
+X [ERROR] Error parsing file: ...\portfolio\vite.config.js
+X [ERROR] Required Worker name missing.
+```
+
+So always `cd` here first:
+
+```bash
+cd "C:\Users\dylan\OneDrive\Desktop\portfolio-project\portfolio\worker"
+```
+
+Or pass the config explicitly from anywhere:
+
+```bash
+npx wrangler deploy --config worker/wrangler.jsonc
+```
+
 ## One-time setup
 
 Get a free API key from https://aistudio.google.com/apikey
 
 ```bash
-cd worker
 npm install
 npx wrangler login
-npx wrangler secret put GEMINI_API_KEY   # paste the key when prompted
+npx wrangler secret put GEMINI_API_KEY
 npx wrangler deploy
 ```
 
 `deploy` prints the worker URL, e.g.
 `https://dylan-recruiter-assistant.<subdomain>.workers.dev`
 
-If that does not match the default in `src/constants/recruiter.js`, set it in a
-`.env` file at the repo root and rebuild:
+If that does not match the default in `src/constants/recruiter.js`, create a
+`.env` at the repo root and rebuild the site:
 
 ```
 VITE_ASSISTANT_URL=https://dylan-recruiter-assistant.<subdomain>.workers.dev
 ```
 
+## Validate without deploying
+
+```bash
+npx wrangler deploy --dry-run
+```
+
+Prints the bundle size and resolved bindings. Good first check that config and
+code are sound.
+
 ## Optional: per-IP rate limiting
 
 Without this the worker still refuses other origins, but a determined caller
-could script requests. To cap them at 40/hour per IP:
+could script requests directly. To cap them at 40/hour per IP:
 
 ```bash
 npx wrangler kv namespace create RATE_LIMIT
 ```
 
-Uncomment the `[[kv_namespaces]]` block in `wrangler.toml`, paste in the printed
+Uncomment the `kv_namespaces` block in `wrangler.jsonc`, paste in the printed
 id, and redeploy.
 
 ## Editing what the assistant knows
@@ -63,16 +94,20 @@ Changes take effect immediately; no site rebuild needed.
 ## Local development
 
 ```bash
-npx wrangler dev            # serves on http://localhost:8787
+npx wrangler dev
 ```
 
-Put the key in `worker/.dev.vars` (gitignored) for local runs:
+Serves on http://localhost:8787. Put the key in `worker/.dev.vars` (gitignored):
 
 ```
 GEMINI_API_KEY=your-key-here
 ```
 
-Then point the site at it with `VITE_ASSISTANT_URL=http://localhost:8787`.
+Then point the site at it by adding to the repo root `.env`:
+
+```
+VITE_ASSISTANT_URL=http://localhost:8787
+```
 
 ## Logs
 
