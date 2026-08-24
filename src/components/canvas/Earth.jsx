@@ -5,6 +5,7 @@ import { useReducedMotion } from "framer-motion";
 
 import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
+import { isWebGLAvailable } from "../../utils/webgl";
 
 const Earth = () => {
   const earth = useGLTF("/gaming_laptop/scene.gltf");
@@ -30,6 +31,8 @@ const EarthCanvas = () => {
   const shouldReduceMotion = useReducedMotion();
   const wrapRef = useRef(null);
   const [onScreen, setOnScreen] = useState(false);
+  // Probed once, after the hooks above so the hook order never changes.
+  const [webglSupported] = useState(isWebGLAvailable);
 
   // This sits at the foot of a very long page. Without a visibility gate it
   // would render every frame while the visitor reads the top of the site.
@@ -49,8 +52,11 @@ const EarthCanvas = () => {
 
   const spinning = onScreen && !shouldReduceMotion;
 
+  // Decorative sign-off, so it simply collapses without WebGL.
+  if (!webglSupported) return null;
+
   return (
-    <div ref={wrapRef} className='w-full h-full'>
+    <div ref={wrapRef} className='w-full h-[350px] md:h-[500px]'>
       <CanvasErrorBoundary>
         <Canvas
           aria-hidden='true'

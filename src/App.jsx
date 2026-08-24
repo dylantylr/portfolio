@@ -25,10 +25,9 @@ const App = () => {
 
         {/* Decorative sign-off. The model spins on its own; the canvas is
             already hidden from assistive tech. */}
-        <div
-          aria-hidden="true"
-          className="w-full h-[350px] md:h-[500px] mt-4"
-        >
+        {/* The canvas carries its own height so this collapses to nothing
+            when WebGL is unavailable and EarthCanvas renders null. */}
+        <div aria-hidden="true" className="w-full mt-4">
           <EarthCanvas />
         </div>
       </main>

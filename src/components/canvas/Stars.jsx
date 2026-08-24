@@ -4,6 +4,8 @@ import { Points, PointMaterial, Preload } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
 import * as random from "maath/random/dist/maath-random.esm";
 
+import { isWebGLAvailable } from "../../utils/webgl";
+
 // Must be a multiple of 3 (x, y, z per point) or the trailing point is NaN,
 // which makes THREE.BufferGeometry.computeBoundingSphere() report NaN radius.
 const STAR_COUNT = 5001;
@@ -38,6 +40,9 @@ const Stars = (props) => {
 };
 
 const StarsCanvas = () => {
+  // Purely decorative, so without WebGL it just goes away.
+  if (!isWebGLAvailable()) return null;
+
   return (
     <div
       aria-hidden='true'

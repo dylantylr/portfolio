@@ -6,6 +6,7 @@ import { CanvasTexture } from "three";
 
 import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
+import { isWebGLAvailable } from "../../utils/webgl";
 
 // Region of the body texture holding the eyes, in texture pixels.
 const EYE_PATCH = { x: 500, y: 650, width: 250, height: 150 };
@@ -115,6 +116,8 @@ const Computers = ({ isMobile }) => {
 const ComputersCanvas = () => {
   const shouldReduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  // Probed once, after the hooks above so the hook order never changes.
+  const [webglSupported] = useState(isWebGLAvailable);
 
   useEffect(() => {
     // Add a listener for changes to the screen size
@@ -136,6 +139,9 @@ const ComputersCanvas = () => {
       mediaQuery.removeEventListener("change", handleMediaQueryChange);
     };
   }, []);
+
+  // Without WebGL the hero keeps its heading and copy, just no model.
+  if (!webglSupported) return null;
 
   return (
     <CanvasErrorBoundary>
