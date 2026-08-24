@@ -81,7 +81,7 @@ const Computers = ({ isMobile }) => {
         // horizontal field of view is much narrower. z = -0.714 puts the model
         // bounding-box centre on the camera axis, centering it at any aspect.
         position={isMobile ? [-2, -0, -0.714] : [-2, 0, -0.714]}
-        rotation={[Math.PI - 1.20, -0.5, 0.12]}
+        rotation={[0,-0.55,0]}
       />
     </mesh>
   );
@@ -124,8 +124,6 @@ const ComputersCanvas = () => {
     >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
-          autoRotate={!shouldReduceMotion}
-          autoRotateSpeed={1.25}
           enableZoom={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
