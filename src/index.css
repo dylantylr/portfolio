@@ -214,3 +214,17 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* On touch devices the 3D canvases must not swallow vertical swipes, or the
+   page cannot be scrolled past the hero. react-three-fiber and OrbitControls
+   both set touch-action: none directly on the element, and a stylesheet only
+   beats an inline style when it is !important.
+
+   pan-y hands vertical scrolling back to the browser while still letting a
+   horizontal drag reach the model, so the page scrolls normally and the model
+   can still be spun. */
+@media (pointer: coarse) {
+  canvas {
+    touch-action: pan-y !important;
+  }
+}
