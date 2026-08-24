@@ -67,17 +67,21 @@ const EarthCanvas = () => {
             position: [-4, 3, 6],
           }}
         >
-          <Suspense fallback={<CanvasLoader />}>
-            <OrbitControls
-              autoRotate={spinning}
-              enableZoom={false}
-              maxPolarAngle={Math.PI / 2}
-              minPolarAngle={Math.PI / 2}
-            />
-            <Earth />
+          {/* Errors thrown inside the canvas tree do not reach the boundary
+              outside it, so a failed model load needs catching in here. */}
+          <CanvasErrorBoundary>
+            <Suspense fallback={<CanvasLoader />}>
+              <OrbitControls
+                autoRotate={spinning}
+                enableZoom={false}
+                maxPolarAngle={Math.PI / 2}
+                minPolarAngle={Math.PI / 2}
+              />
+              <Earth />
 
-            <Preload all />
-          </Suspense>
+              <Preload all />
+            </Suspense>
+          </CanvasErrorBoundary>
         </Canvas>
       </CanvasErrorBoundary>
     </div>

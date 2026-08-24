@@ -7,6 +7,9 @@ import { CanvasTexture } from "three";
 import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 
+// Region of the body texture holding the eyes, in texture pixels.
+const EYE_PATCH = { x: 500, y: 650, width: 250, height: 150 };
+
 const Computers = ({ isMobile }) => {
   const computer = useGLTF("/lost_programer/scene.gltf");
   computer.scene.traverse((child) => {
@@ -33,31 +36,53 @@ const Computers = ({ isMobile }) => {
       const image = texture?.image;
       if (!image || child.material?.name !== "body") return;
 
-      const canvas = document.createElement("canvas");
-      canvas.width = image.width;
-      canvas.height = image.height;
-      const context = canvas.getContext("2d");
-      context.drawImage(image, 0, 0);
+      // Whether this is a decoded HTMLImageElement or an ImageBitmap, and
+      // whether it has dimensions yet, varies by browser. Reading pixels from a
+      // zero-sized canvas throws, and an exception here would escape into React
+      // and take the page down, so the recolour is strictly best-effort.
+      const width = image.width || image.naturalWidth || 0;
+      const height = image.height || image.naturalHeight || 0;
+      if (!width || !height) return;
 
-      const eyeRegion = context.getImageData(500, 650, 250, 150);
-      for (let index = 0; index < eyeRegion.data.length; index += 4) {
-        const red = eyeRegion.data[index];
-        const green = eyeRegion.data[index + 1];
-        const blue = eyeRegion.data[index + 2];
+      // Clamp the eye patch to the texture so the read can never run past it.
+      const x = Math.min(EYE_PATCH.x, Math.max(0, width - 1));
+      const y = Math.min(EYE_PATCH.y, Math.max(0, height - 1));
+      const patchWidth = Math.min(EYE_PATCH.width, width - x);
+      const patchHeight = Math.min(EYE_PATCH.height, height - y);
+      if (patchWidth <= 0 || patchHeight <= 0) return;
 
-        if (blue > red * 1.15 && blue > green * 1.05) {
-          eyeRegion.data[index] = 92;
-          eyeRegion.data[index + 1] = 52;
-          eyeRegion.data[index + 2] = 24;
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const context = canvas.getContext("2d", { willReadFrequently: true });
+        if (!context) return;
+
+        context.drawImage(image, 0, 0);
+
+        const eyeRegion = context.getImageData(x, y, patchWidth, patchHeight);
+        for (let index = 0; index < eyeRegion.data.length; index += 4) {
+          const red = eyeRegion.data[index];
+          const green = eyeRegion.data[index + 1];
+          const blue = eyeRegion.data[index + 2];
+
+          if (blue > red * 1.15 && blue > green * 1.05) {
+            eyeRegion.data[index] = 92;
+            eyeRegion.data[index + 1] = 52;
+            eyeRegion.data[index + 2] = 24;
+          }
         }
-      }
 
-      context.putImageData(eyeRegion, 500, 650);
-      const recoloredTexture = new CanvasTexture(canvas);
-      recoloredTexture.flipY = texture.flipY;
-      child.material = child.material.clone();
-      child.material.map = recoloredTexture;
-      child.material.needsUpdate = true;
+        context.putImageData(eyeRegion, x, y);
+        const recoloredTexture = new CanvasTexture(canvas);
+        recoloredTexture.flipY = texture.flipY;
+        child.material = child.material.clone();
+        child.material.map = recoloredTexture;
+        child.material.needsUpdate = true;
+      } catch (error) {
+        // Keep the original texture. A missed recolour is not worth a blank page.
+        console.warn("Eye recolour skipped:", error);
+      }
     });
   }, [computer]);
 
@@ -122,14 +147,20 @@ const ComputersCanvas = () => {
       camera={{ position: [20, 3, 5], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
     >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls
-          enableZoom={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-        />
-        <Computers isMobile={isMobile} />
-      </Suspense>
+      {/* The outer boundary cannot see errors thrown inside the canvas tree,
+          because react-three-fiber renders it through its own reconciler. This
+          one catches a failed model load and drops the model rather than
+          letting the error escape and blank the page. */}
+      <CanvasErrorBoundary>
+        <Suspense fallback={<CanvasLoader />}>
+          <OrbitControls
+            enableZoom={false}
+            maxPolarAngle={Math.PI / 2}
+            minPolarAngle={Math.PI / 2}
+          />
+          <Computers isMobile={isMobile} />
+        </Suspense>
+      </CanvasErrorBoundary>
 
       <Preload all />
     </Canvas>
