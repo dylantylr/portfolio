@@ -7,7 +7,7 @@ import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 
 const Earth = () => {
-  const earth = useGLTF("./silent_ash/scene.gltf");
+  const earth = useGLTF("./gaming_laptop/scene.gltf");
 
   return (
     <mesh>
@@ -21,7 +21,7 @@ const Earth = () => {
         shadow-mapSize={1024}
       />
       <pointLight intensity={1} />
-    <primitive object={earth.scene} scale={2.5} position-y={-2} rotation-y={0} />
+    <primitive object={earth.scene} scale={0.015} position-y={0} rotation-y={0} />
     </mesh>
   );
 };
