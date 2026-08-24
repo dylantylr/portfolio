@@ -6,6 +6,7 @@ import { useReducedMotion } from "framer-motion";
 import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 import { isWebGLAvailable } from "../../utils/webgl";
+import { useCoarsePointer } from "../../utils/useCoarsePointer";
 
 const Earth = () => {
   const earth = useGLTF("/gaming_laptop/scene.gltf");
@@ -31,6 +32,7 @@ const EarthCanvas = () => {
   const shouldReduceMotion = useReducedMotion();
   const wrapRef = useRef(null);
   const [onScreen, setOnScreen] = useState(false);
+  const isTouch = useCoarsePointer();
   // Probed once, after the hooks above so the hook order never changes.
   const [webglSupported] = useState(isWebGLAvailable);
 
@@ -77,8 +79,12 @@ const EarthCanvas = () => {
               outside it, so a failed model load needs catching in here. */}
           <CanvasErrorBoundary>
             <Suspense fallback={<CanvasLoader />}>
+              {/* Kept mounted on touch because autoRotate needs it, but with
+                  every gesture turned off so it cannot swallow a swipe. */}
               <OrbitControls
                 autoRotate={spinning}
+                enableRotate={!isTouch}
+                enablePan={false}
                 enableZoom={false}
                 maxPolarAngle={Math.PI / 2}
                 minPolarAngle={Math.PI / 2}

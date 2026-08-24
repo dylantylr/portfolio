@@ -7,6 +7,7 @@ import { CanvasTexture } from "three";
 import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 import { isWebGLAvailable } from "../../utils/webgl";
+import { useCoarsePointer } from "../../utils/useCoarsePointer";
 
 // Region of the body texture holding the eyes, in texture pixels.
 const EYE_PATCH = { x: 500, y: 650, width: 250, height: 150 };
@@ -116,6 +117,7 @@ const Computers = ({ isMobile }) => {
 const ComputersCanvas = () => {
   const shouldReduceMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
+  const isTouch = useCoarsePointer();
   // Probed once, after the hooks above so the hook order never changes.
   const [webglSupported] = useState(isWebGLAvailable);
 
@@ -159,11 +161,18 @@ const ComputersCanvas = () => {
           letting the error escape and blank the page. */}
       <CanvasErrorBoundary>
         <Suspense fallback={<CanvasLoader />}>
-          <OrbitControls
-            enableZoom={false}
-            maxPolarAngle={Math.PI / 2}
-            minPolarAngle={Math.PI / 2}
-          />
+          {/* Not rendered on touch at all. OrbitControls calls preventDefault
+              on the pointer events it handles, which cancels scrolling no
+              matter what touch-action says, and this canvas fills the screen
+              on a phone. Leaving it out is the only way a swipe here reaches
+              the page. Desktop keeps click-drag as before. */}
+          {!isTouch && (
+            <OrbitControls
+              enableZoom={false}
+              maxPolarAngle={Math.PI / 2}
+              minPolarAngle={Math.PI / 2}
+            />
+          )}
           <Computers isMobile={isMobile} />
         </Suspense>
       </CanvasErrorBoundary>
