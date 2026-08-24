@@ -55,7 +55,7 @@ import {
 
   // Lives in public/, so the path stays relative to work under the
   // /portfolio/ base path on GitHub Pages.
-  export const resumeUrl = "./Dylan_Taylor_Resume.pdf";
+  export const resumeUrl = "/Dylan_Taylor_Resume.pdf";
 
   const services = [
     {

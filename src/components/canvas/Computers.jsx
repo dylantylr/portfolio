@@ -8,7 +8,7 @@ import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 
 const Computers = ({ isMobile }) => {
-  const computer = useGLTF("./lost_programer/scene.gltf");
+  const computer = useGLTF("/lost_programer/scene.gltf");
   computer.scene.traverse((child) => {
     const positionAttribute = child.geometry?.attributes?.position;
     const hasTextureCoordinates = child.geometry?.attributes?.uv;

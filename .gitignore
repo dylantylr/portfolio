@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# local env for VITE_ASSISTANT_URL etc
+.env
+.env.local

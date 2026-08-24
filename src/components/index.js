@@ -1,5 +1,6 @@
 import { EarthCanvas, BallCanvas, ComputersCanvas, StarsCanvas } from './canvas';
 import Hero from "./Hero";
+import RecruiterCTA from "./RecruiterCTA";
 import Navbar from "./Navbar";
 import About from "./About";
 import Tech from "./Tech";
@@ -12,6 +13,7 @@ import CanvasLoader from "./Loader";
 export {
   Hero,
   Navbar,
+  RecruiterCTA,
   About,
   Tech,
   Experience,

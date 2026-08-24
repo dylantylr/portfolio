@@ -1,4 +1,4 @@
-import { About, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas, EarthCanvas } from "./components";
+import { About, Experience, Feedbacks, Hero, Navbar, Tech, Works, StarsCanvas, EarthCanvas, RecruiterCTA } from "./components";
 
 const App = () => {
   return (
@@ -32,6 +32,8 @@ const App = () => {
           <EarthCanvas />
         </div>
       </main>
+
+      <RecruiterCTA />
     </div>
   );
 };

@@ -7,7 +7,7 @@ import CanvasLoader from "../Loader";
 import CanvasErrorBoundary from "../CanvasErrorBoundary";
 
 const Earth = () => {
-  const earth = useGLTF("./gaming_laptop/scene.gltf");
+  const earth = useGLTF("/gaming_laptop/scene.gltf");
 
   return (
     <mesh>
