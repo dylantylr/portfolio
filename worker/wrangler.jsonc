@@ -1,24 +1,21 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "dylan-recruiter-assistant",
-  "main": "src/index.js",
-  "compatibility_date": "2026-08-20",
-
-  "vars": {
-    "GEMINI_MODEL": "gemini-2.5-flash"
-  },
-
-  "observability": {
-    "enabled": true
-  }
-
-  // GEMINI_API_KEY is a secret. Never put it in this file. Set it with:
-  //   npx wrangler secret put GEMINI_API_KEY
-  //
-  // Optional per-IP rate limiting. Create the namespace first:
-  //   npx wrangler kv namespace create RATE_LIMIT
-  // then uncomment and paste the printed id:
-  // ,"kv_namespaces": [
-  //   { "binding": "RATE_LIMIT", "id": "paste-the-id-wrangler-prints" }
-  // ]
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "dylan-recruiter-assistant",
+	"main": "src/index.js",
+	"compatibility_date": "2026-08-20",
+	"vars": {
+		"GEMINI_MODEL": "gemini-3.6-flash"
+	},
+	"observability": {
+		"enabled": true
+	},
+	// Backs the per-IP rate limit in src/index.js (40 requests/hour).
+	"kv_namespaces": [
+		{
+			"binding": "RATE_LIMIT",
+			"id": "51f8cfd92b6d4b1d99803b4a5766f070"
+		}
+	]
+	// GEMINI_API_KEY is a secret and must never live in this file:
+	//   npx wrangler secret put GEMINI_API_KEY
 }

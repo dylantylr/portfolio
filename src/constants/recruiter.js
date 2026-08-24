@@ -2,7 +2,7 @@
 // override it locally without editing this file.
 export const ASSISTANT_URL =
   import.meta.env.VITE_ASSISTANT_URL ||
-  "https://dylan-recruiter-assistant.dylantylr.workers.dev";
+  "https://dylan-recruiter-assistant.dylntylr-assistant.workers.dev";
 
 export const MESSAGE_LIMIT = 10;
 

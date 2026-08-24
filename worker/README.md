@@ -10,7 +10,7 @@ talks to the worker; only the worker talks to Google.
 
 - Accepts `POST` with `{ message, history }` from an allowlisted origin.
 - Prepends a system instruction containing Dylan's professional briefing.
-- Calls `gemini-2.5-flash` and returns `{ reply }`.
+- Calls `gemini-3.6-flash` and returns `{ reply }`.
 - Rejects requests from any origin not in `ALLOWED_ORIGINS` (`src/index.js`).
 - Caps message length (600 chars) and history (12 turns).
 - Optionally rate limits per IP when a KV namespace is bound.
