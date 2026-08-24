@@ -8,7 +8,7 @@ import menu from "./menu.svg";
 import close from "./close.svg";
 import david_goggins from "./david_goggins.jpg";
 import shuzo from "./shuzo.jpg";
-import denzel from "./denzel.jpg";
+import tyler from "./tyler.jpg";
 import website from "./website.png";
 
 import css from "./tech/css.png";
@@ -65,6 +65,6 @@ export {
   tripguide,
   david_goggins,
   shuzo,
-  denzel,
+  tyler,
   website,
 };

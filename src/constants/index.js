@@ -24,7 +24,7 @@ import {
     tripguide,
     david_goggins,
     shuzo,
-    denzel,
+    tyler,
   } from "../assets";
 
   export const navLinks = [
@@ -202,11 +202,11 @@ import {
     },
     {
       testimonial:
-        "Dreams without goals, are just dreams and they ultimately fuel disappointment.",
-      name: "Denzel Washington",
+        "It’s only after we’ve lost everything that we’re free to do anything.",
+      name: "Tyler Durden",
       designation: "",
       company: "",
-      image: denzel,
+      image: tyler,
     },
   ];
 
