@@ -168,14 +168,6 @@ const Navbar = () => {
               </li>
             ))}
 
-            <li className='text-[18px] font-medium'>
-              <a
-                href='/vibe/'
-                className={`text-secondary hover:text-white touch-manipulation ${focusRing}`}
-              >
-                Radio
-              </a>
-            </li>
 
             <li className='relative' ref={contactWrapRef}>
               <button
@@ -199,15 +191,6 @@ const Navbar = () => {
                 className='absolute right-0 top-full mt-3 min-w-[150px] rounded-xl black-gradient p-3 shadow-card'
               >
                 <ul className='list-none flex flex-col gap-1'>
-                  <li className='font-poppins font-medium text-[16px]'>
-                <a
-                  href='/vibe/'
-                  onClick={() => setToggle(false)}
-                  className={`block text-secondary hover:text-white touch-manipulation ${focusRing}`}
-                >
-                  Radio
-                </a>
-              </li>
 
               {contactLinks.map((link) => (
                     <li key={link.id}>
