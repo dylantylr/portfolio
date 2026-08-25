@@ -51,7 +51,7 @@ const About = () => {
 
       {/* The numbers are the strongest thing on the resume, so they get their
           own moment instead of being buried in a timeline bullet. */}
-      <div className='mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-2 sm:max-w-2xl'>
+      <div className='mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-3'>
         {metrics.map((metric, index) => (
           <Metric key={metric.label} index={index} {...metric} />
         ))}

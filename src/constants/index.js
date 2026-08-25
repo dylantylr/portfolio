@@ -64,6 +64,11 @@ import {
         "Cut off FedRAMP service onboarding, from 60 developer-days to under 10",
     },
     {
+      value: "80GB+",
+      label:
+        "Frontend monorepo standardized onto a shared configuration SDK",
+    },
+    {
       value: "$14K/mo",
       label:
         "Infrastructure spend reclaimed by automating stale policy cleanup",

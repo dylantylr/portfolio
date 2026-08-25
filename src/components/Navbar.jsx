@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { styles } from "../styles";
 import { navLinks, contactLinks, resumeUrl } from "../constants";
-import { logo, menu, close } from "../assets";
+import { menu, close } from "../assets";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm";
@@ -138,20 +138,12 @@ const Navbar = () => {
         scrolled ? "bg-primary" : "bg-transparent"
       }`}
     >
-      <div className='w-full flex justify-between items-center max-w-7xl mx-auto'>
+      <div className='w-full flex justify-between items-center max-w-6xl mx-auto'>
         <a
           href='/'
           onClick={handleHomeClick}
-          className={`flex items-center gap-2 touch-manipulation ${focusRing}`}
+          className={`flex items-center touch-manipulation ${focusRing}`}
         >
-          <img
-            src={logo}
-            alt=''
-            aria-hidden='true'
-            width={36}
-            height={36}
-            className='w-9 h-9 object-contain'
-          />
           <p className='text-white text-[18px] font-bold flex '>
             Dylan &nbsp;
             <span className='sm:block hidden'> | SWE</span>

@@ -38,7 +38,7 @@ const ProjectCard = ({
         tiltMaxAngleY={45}
         scale={1}
         transitionSpeed={450}
-        className='sm:w-[360px] w-full'
+        className='w-full'
       >
         {/* The whole card is the link, so there is nothing interactive nested
             inside it. aria-label keeps the accessible name short. */}
@@ -115,7 +115,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7 place-content-center items-stretch'>
+      <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

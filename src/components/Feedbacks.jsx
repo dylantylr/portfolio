@@ -15,38 +15,41 @@ const FeedbackCard = ({
   image,
 }) => (
   <motion.div
-    variants={fadeIn("", "spring", index * 0.5, 0.75)}
-    className='flex flex-col rounded-xl border border-line bg-tertiary p-7 xs:w-[320px] w-full'
+    variants={fadeIn("up", "tween", index * 0.08, 0.5)}
+    className='flex w-full flex-col rounded-xl border border-line bg-tertiary p-7'
   >
     <figure className='flex flex-1 flex-col'>
-      <p aria-hidden="true" className="font-mono text-[13px] text-accent">&ldquo;</p>
+      <p aria-hidden='true' className='font-mono text-[13px] text-accent'>
+        &ldquo;
+      </p>
 
       <div className='mt-1 flex flex-1 flex-col'>
         <blockquote className='text-[16px] leading-relaxed text-white-100 text-pretty break-words'>
           {testimonial}
         </blockquote>
 
-        <figcaption className='mt-auto pt-7 flex justify-between items-center gap-1'>
-          <div className='flex-1 min-w-0 flex flex-col'>
-            <p className='font-mono text-[13px] text-secondary truncate'>
-              
-              {name}
-            </p>
-            <p className='mt-1 text-secondary text-[12px] truncate'>
-              {designation} {company}
-            </p>
-          </div>
-
+        <figcaption className='mt-auto flex items-center gap-3 pt-7'>
           <img
             src={image}
             alt=''
             aria-hidden='true'
-            width={40}
-            height={40}
+            width={36}
+            height={36}
             loading='lazy'
             decoding='async'
-            className='w-10 h-10 rounded-full object-cover shrink-0'
+            className='h-9 w-9 shrink-0 rounded-full object-cover'
           />
+
+          <div className='min-w-0 flex-1'>
+            <p className='truncate font-mono text-[13px] text-white-100'>
+              {name}
+            </p>
+            {designation || company ? (
+              <p className='mt-0.5 truncate text-[12px] text-secondary'>
+                {designation} {company}
+              </p>
+            ) : null}
+          </div>
         </figcaption>
       </div>
     </figure>
@@ -55,25 +58,22 @@ const FeedbackCard = ({
 
 const Feedbacks = () => {
   return (
-    <div className={`mt-12 bg-black-100 rounded-[20px]`}>
-      <div
-        className={`bg-tertiary rounded-2xl ${styles.padding} min-h-[300px]`}
-      >
-        <motion.div variants={textVariant()}>
-          <p className={styles.sectionSubText}>Inspiration</p>
-          <h2 className={`${styles.sectionHeadText} mt-3 text-balance`}>
-            Words I keep around
-          </h2>
-        </motion.div>
-      </div>
-      <div
-        className={`-mt-20 pb-14 ${styles.paddingX} flex flex-wrap gap-7 place-content-center`}
-      >
+    <>
+      <motion.div variants={textVariant()}>
+        <p className={styles.sectionSubText}>Inspiration</p>
+        <h2 className={`${styles.sectionHeadText} mt-3 text-balance`}>
+          Words I keep around
+        </h2>
+      </motion.div>
+
+      {/* Grid rather than fixed-width cards in a flex-wrap, so three sit
+          across at full width instead of wrapping two and one. */}
+      <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {testimonials.map((testimonial, index) => (
           <FeedbackCard key={testimonial.name} index={index} {...testimonial} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
