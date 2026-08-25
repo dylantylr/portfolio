@@ -7,9 +7,14 @@ const Hero = () => {
   const shouldReduceMotion = useReducedMotion();
 
   return (
-    <section className="relative w-full h-screen mx-auto">
+    // Below sm the hero is a real column: the copy takes the height it needs
+    // and the canvas gets the remainder. A fixed percentage split cannot work
+    // there, because the heading wraps to more lines on a short or narrow
+    // phone while the split stays put. From sm up the copy is a narrow column
+    // on the left with the model clear of it, so the old overlay is kept.
+    <section className="relative mx-auto flex h-screen w-full flex-col sm:block">
        <div
-        className={`absolute inset-0 top-[120px]  max-w-7xl mx-auto ${styles.paddingX} flex flex-col items-start`}
+        className={`relative pt-[120px] sm:absolute sm:inset-0 sm:top-[120px] sm:pt-0 max-w-7xl mx-auto w-full ${styles.paddingX} flex flex-col items-start`}
       >
         <div className='max-w-2xl'>
           <p className='font-mono text-[12px] uppercase tracking-[0.18em] text-accent'>
@@ -35,7 +40,11 @@ const Hero = () => {
         </div>
       </div>
 
-      <ComputersCanvas />
+      {/* min-h-0 so the canvas can shrink inside the flex column rather than
+          forcing the section taller than the viewport. */}
+      <div className='relative min-h-0 flex-1 sm:absolute sm:inset-0'>
+        <ComputersCanvas />
+      </div>
 
       <div className='absolute xs:bottom-10 bottom-32 w-full flex justify-center items-center'>
         <a
