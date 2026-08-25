@@ -26,8 +26,8 @@ Highlights:
   onboarding workflow and packaged into a reusable module.
 - Drove adoption of a centralized environment-configuration platform across an
   80GB+ frontend monorepo powering enterprise SaaS products used by millions.
-  Authored and merged pull requests consolidating scattered, error-prone
-  checks onto a shared SDK to establish a single source of truth.
+  Consolidated scattered, error-prone checks onto a shared SDK to establish a
+  single source of truth.
 - Designed and built a Java backend SDK adopted across multiple services, giving
   them one consistent interface for environment-aware decisions, with automated
   releases through built-in CI/CD pipelines and version management.
