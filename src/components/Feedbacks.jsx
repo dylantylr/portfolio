@@ -16,24 +16,20 @@ const FeedbackCard = ({
 }) => (
   <motion.div
     variants={fadeIn("", "spring", index * 0.5, 0.75)}
-    className='flex flex-col bg-black-200 p-10 rounded-3xl xs:w-[320px] w-full'
+    className='flex flex-col rounded-xl border border-line bg-tertiary p-7 xs:w-[320px] w-full'
   >
     <figure className='flex flex-1 flex-col'>
-      <p aria-hidden='true' className='text-white font-black text-[48px]'>
-        &ldquo;
-      </p>
+      <p aria-hidden="true" className="font-mono text-[13px] text-accent">&ldquo;</p>
 
       <div className='mt-1 flex flex-1 flex-col'>
-        <blockquote className='text-white tracking-wider text-[18px] text-pretty break-words'>
+        <blockquote className='text-[16px] leading-relaxed text-white-100 text-pretty break-words'>
           {testimonial}
         </blockquote>
 
         <figcaption className='mt-auto pt-7 flex justify-between items-center gap-1'>
           <div className='flex-1 min-w-0 flex flex-col'>
-            <p className='text-white font-medium text-[16px] truncate'>
-              <span aria-hidden='true' className='blue-text-gradient'>
-                @
-              </span>{" "}
+            <p className='font-mono text-[13px] text-secondary truncate'>
+              
               {name}
             </p>
             <p className='mt-1 text-secondary text-[12px] truncate'>
@@ -65,7 +61,9 @@ const Feedbacks = () => {
       >
         <motion.div variants={textVariant()}>
           <p className={styles.sectionSubText}>Inspiration</p>
-          <h2 className={`${styles.sectionHeadText} text-balance`}>Quotes.</h2>
+          <h2 className={`${styles.sectionHeadText} mt-3 text-balance`}>
+            Words I keep around
+          </h2>
         </motion.div>
       </div>
       <div

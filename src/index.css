@@ -1,3 +1,23 @@
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+  /* Near-black with a slight cool cast rather than the template navy. */
+  --bg: #08090b;
+  --surface: #101216;
+  --surface-2: #171a20;
+
+  --line: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.18);
+
+  --text: #e9ecf1;
+  --text-dim: #868d99;
+
+  /* Retheme the whole site by changing these two. */
+  --accent: #4fd6c9;
+  --accent-dim: #2fb3a7;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,7 +26,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans);
 }
 
 html {

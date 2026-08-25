@@ -44,7 +44,7 @@ const ResumeButton = ({ className = "" }) => (
     href={resumeUrl}
     download
     aria-label='Download resume (PDF)'
-    className={`inline-flex items-center justify-center gap-2 rounded-lg bg-[#915EFF] px-4 py-2 text-[16px] font-semibold text-white transition-colors duration-200 hover:bg-[#7d4ae8] touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary ${className}`}
+    className={`inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2 text-[15px] font-semibold text-primary transition-colors duration-200 hover:bg-accent-dim touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-primary ${className}`}
   >
     <DownloadIcon />
     Resume
