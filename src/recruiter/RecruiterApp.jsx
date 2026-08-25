@@ -2,7 +2,6 @@ import React from "react";
 
 import { contactLinks, resumeUrl } from "../constants";
 import { recruiterProfile } from "../constants/recruiter";
-import { logo } from "../assets";
 import Chat from "./Chat";
 
 const focusRing =
@@ -61,16 +60,7 @@ const RecruiterApp = () => {
         </a>
 
         <main id='recruiter-main'>
-          <header className='mt-8 flex items-start gap-4'>
-            <img
-              src={logo}
-              alt=''
-              aria-hidden='true'
-              width={56}
-              height={56}
-              className='h-14 w-14 shrink-0 object-contain'
-            />
-
+          <header className='mt-8'>
             <div className='min-w-0'>
               <h1 className='text-white font-black text-[32px] sm:text-[40px] leading-tight text-balance'>
                 {recruiterProfile.name}
