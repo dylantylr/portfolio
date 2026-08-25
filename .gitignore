@@ -26,3 +26,6 @@ dist-ssr
 # local env for VITE_ASSISTANT_URL etc
 .env
 .env.local
+
+# scratch scripts
+._*
