@@ -53,7 +53,7 @@ const App = () => {
             </svg>
             <span className="text-[15px] font-medium text-white">Radio</span>
             <span className="hidden text-[14px] text-secondary sm:inline">
-              what would they listen to?
+              Rick and Morty
             </span>
             <span
               aria-hidden="true"
