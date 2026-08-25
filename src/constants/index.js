@@ -168,7 +168,7 @@ import {
       date: "July 2025 - Present",
       points: [
         "Cut regulated-cloud (FedRAMP) service onboarding by 83% - from 60 developer-days to under 10 - by co-developing an LLM-based AI-agent automation pilot, since adopted org-wide as the default onboarding workflow.",
-        "Drove adoption of a centralized environment-configuration platform across an 80GB+ frontend monorepo, authoring and merging 125+ pull requests to consolidate scattered, error-prone checks onto a shared SDK.",
+        "Drove adoption of a centralized environment-configuration platform across an 80GB+ frontend monorepo, consolidating scattered, error-prone checks onto a shared SDK to establish a single source of truth.",
         "Designed and built a Java backend SDK adopted across multiple services, giving them one consistent interface for environment-aware decisions with automated releases through built-in CI/CD pipelines.",
         "Accelerated go-live for government and enterprise customers, provisioning production and staging environments and resolving onboarding across SSO/IdP integration, domain verification, and org-admin setup.",
       ],
