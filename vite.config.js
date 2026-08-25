@@ -16,7 +16,7 @@ export default defineConfig({
       input: {
         main: entry('./index.html'),
         recruiter: entry('./recruiter/index.html'),
-        guess: entry('./guess/index.html'),
+        vibe: entry('./vibe/index.html'),
       },
     },
   },

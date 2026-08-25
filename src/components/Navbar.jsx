@@ -170,10 +170,10 @@ const Navbar = () => {
 
             <li className='text-[18px] font-medium'>
               <a
-                href='/guess/'
+                href='/vibe/'
                 className={`text-secondary hover:text-white touch-manipulation ${focusRing}`}
               >
-                Play
+                Radio
               </a>
             </li>
 
@@ -201,11 +201,11 @@ const Navbar = () => {
                 <ul className='list-none flex flex-col gap-1'>
                   <li className='font-poppins font-medium text-[16px]'>
                 <a
-                  href='/guess/'
+                  href='/vibe/'
                   onClick={() => setToggle(false)}
                   className={`block text-secondary hover:text-white touch-manipulation ${focusRing}`}
                 >
-                  Play
+                  Radio
                 </a>
               </li>
 

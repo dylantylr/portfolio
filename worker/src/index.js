@@ -68,6 +68,118 @@ function sanitizeHistory(history) {
     }));
 }
 
+const VIBE_INSTRUCTION = `
+You pick music for characters from Rick and Morty. You are given a character's
+canonical details from the show's API. Reply with a genre, a real existing song
+that suits them, and three short observations.
+
+Rules:
+- The song must be a real, released track. Give the exact title and the primary
+  artist so it can be looked up. Prefer well known tracks that a search will find.
+- Ground the observations in the details provided and in widely known show canon.
+  Keep them playful rather than stated as trivia. Never invent episode numbers,
+  quotes or plot points.
+- Each observation is one sentence, under 20 words.
+- "reason" is one sentence on why the song fits.
+- Be funny and a little mean where the character deserves it. Never crude.
+`.trim();
+
+const VIBE_SCHEMA = {
+  type: "object",
+  properties: {
+    genre: { type: "string" },
+    song: { type: "string" },
+    artist: { type: "string" },
+    reason: { type: "string" },
+    observations: { type: "array", items: { type: "string" } },
+  },
+  required: ["genre", "song", "artist", "reason", "observations"],
+};
+
+async function handleVibe(payload, env, origin) {
+  const id = Number(payload?.id);
+  const name = typeof payload?.name === "string" ? payload.name.slice(0, 80) : "";
+
+  if (!Number.isInteger(id) || id < 1 || !name) {
+    return json({ error: "Pick a character first." }, 400, origin);
+  }
+
+  // A character's vibe never changes, so one Gemini call per character ever.
+  const cacheKey = `vibe:v1:${id}`;
+  if (env.RATE_LIMIT) {
+    const cached = await env.RATE_LIMIT.get(cacheKey);
+    if (cached) return json({ ...JSON.parse(cached), cached: true }, 200, origin);
+  }
+
+  const facts = [
+    `Name: ${name}`,
+    payload?.species && `Species: ${String(payload.species).slice(0, 40)}`,
+    payload?.status && `Status: ${String(payload.status).slice(0, 20)}`,
+    payload?.gender && `Gender: ${String(payload.gender).slice(0, 20)}`,
+    payload?.origin && `Origin: ${String(payload.origin).slice(0, 60)}`,
+    payload?.location && `Last known location: ${String(payload.location).slice(0, 60)}`,
+    payload?.episodes && `Appears in ${Number(payload.episodes)} episodes`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const model = env.GEMINI_MODEL || "gemini-3.5-flash-lite";
+  const response = await fetch(
+    `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+    {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-goog-api-key": env.GEMINI_API_KEY,
+      },
+      body: JSON.stringify({
+        systemInstruction: { parts: [{ text: VIBE_INSTRUCTION }] },
+        contents: [{ role: "user", parts: [{ text: facts }] }],
+        generationConfig: {
+          temperature: 0.9,
+          maxOutputTokens: 500,
+          responseMimeType: "application/json",
+          responseSchema: VIBE_SCHEMA,
+        },
+      }),
+    }
+  ).catch(() => null);
+
+  if (!response?.ok) {
+    const detail = response ? await response.text().catch(() => "") : "";
+    console.error("Vibe error", response?.status, detail.slice(0, 300));
+
+    return json(
+      {
+        error:
+          response?.status === 429
+            ? "The jukebox is out of free plays for today. Try again tomorrow."
+            : "Could not pick a track for that one. Try another character.",
+      },
+      502,
+      origin
+    );
+  }
+
+  const data = await response.json().catch(() => null);
+  const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  let vibe;
+  try {
+    vibe = JSON.parse(raw);
+  } catch {
+    return json({ error: "Got a garbled answer. Try again." }, 502, origin);
+  }
+
+  vibe.observations = (vibe.observations || []).slice(0, 3);
+
+  if (env.RATE_LIMIT) {
+    await env.RATE_LIMIT.put(cacheKey, JSON.stringify(vibe));
+  }
+
+  return json({ ...vibe, cached: false }, 200, origin);
+}
+
 export default {
   async fetch(request, env) {
     const origin = corsFor(request);
@@ -115,6 +227,10 @@ export default {
       payload = await request.json();
     } catch {
       return json({ error: "Invalid request body." }, 400, origin);
+    }
+
+    if (new URL(request.url).pathname === "/vibe") {
+      return handleVibe(payload, env, origin);
     }
 
     const message = typeof payload?.message === "string" ? payload.message.trim() : "";
