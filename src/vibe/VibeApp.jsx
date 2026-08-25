@@ -31,18 +31,26 @@ const CharacterButton = ({ character, onPick }) => (
   <button
     type='button'
     onClick={() => onPick(character)}
-    className={`group flex flex-col overflow-hidden rounded-xl border border-line bg-tertiary text-left transition-colors duration-200 hover:border-accent touch-manipulation ${focusRing}`}
+    className={`group flex flex-col overflow-hidden rounded-xl border border-line bg-tertiary text-left transition-all duration-200 hover:-translate-y-0.5 hover:border-[#97ce4c] hover:shadow-[0_0_20px_-4px_rgba(151,206,76,0.45)] touch-manipulation ${focusRing}`}
   >
-    <img
-      src={character.image}
-      alt=''
-      aria-hidden='true'
-      width={300}
-      height={300}
-      loading='lazy'
-      decoding='async'
-      className='aspect-square w-full object-cover'
-    />
+    <span className='relative block overflow-hidden'>
+      <img
+        src={character.image}
+        alt=''
+        aria-hidden='true'
+        width={300}
+        height={300}
+        loading='lazy'
+        decoding='async'
+        className='aspect-square w-full object-cover grayscale-[35%] transition-[filter,transform] duration-300 group-hover:scale-105 group-hover:grayscale-0'
+      />
+      {/* Green wash that clears on hover, so the grid reads as one piece and
+          the hovered card pops out of it. */}
+      <span
+        aria-hidden='true'
+        className='pointer-events-none absolute inset-0 bg-[#97ce4c]/10 opacity-100 transition-opacity duration-300 group-hover:opacity-0'
+      />
+    </span>
     <span className='flex items-center gap-2 px-3 py-2.5'>
       <span
         aria-hidden='true'
@@ -158,15 +166,22 @@ const VibeApp = () => {
           <section ref={resultRef} aria-live='polite' className='scroll-mt-6'>
             {picked ? (
               <div className='mt-8 rounded-xl border border-line bg-tertiary p-5 sm:p-6'>
-                <div className='flex flex-wrap items-start gap-5'>
-                  <img
-                    src={picked.image}
-                    alt=''
+                <div className='flex flex-wrap items-start gap-6'>
+                  {/* Character sits inside a spinning portal rather than a
+                      plain thumbnail. Decorative, so it is hidden from AT. */}
+                  <div
                     aria-hidden='true'
-                    width={112}
-                    height={112}
-                    className='h-28 w-28 shrink-0 rounded-lg object-cover'
-                  />
+                    className='relative h-32 w-32 shrink-0 sm:h-36 sm:w-36'
+                  >
+                    <div className='portal-glow absolute -inset-2 rounded-full opacity-80' />
+                    <img
+                      src={picked.image}
+                      alt=''
+                      width={144}
+                      height={144}
+                      className='portal-rim relative h-full w-full rounded-full object-cover'
+                    />
+                  </div>
 
                   <div className='min-w-0 flex-1'>
                     <h2 className='text-[22px] font-semibold text-white'>

@@ -248,3 +248,35 @@ html {
     touch-action: pan-y !important;
   }
 }
+
+/* Portal treatment for the Rick and Morty page. The show's green rather than
+   the site accent, because that page is themed. */
+.portal-glow {
+  background: conic-gradient(
+    from 0deg,
+    #97ce4c,
+    #24a148,
+    #d9f99d,
+    #3fa34d,
+    #97ce4c
+  );
+  filter: blur(10px);
+  animation: portal-spin 7s linear infinite;
+}
+
+.portal-rim {
+  box-shadow: 0 0 0 2px rgba(151, 206, 76, 0.9),
+    0 0 24px 4px rgba(151, 206, 76, 0.35);
+}
+
+@keyframes portal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-glow {
+    animation: none;
+  }
+}
