@@ -96,6 +96,40 @@ const VIBE_SCHEMA = {
   required: ["genre", "song", "artist", "reason", "observations"],
 };
 
+// Deezer rather than iTunes. Apple rate limits its search endpoint per caller
+// IP, and both Cloudflare's shared egress addresses and carrier NAT sit
+// permanently over that limit, which is why a track would resolve on a home
+// desktop and come back empty from a phone or from here. Deezer has no CORS
+// header so a browser cannot call it, but a worker is not subject to CORS, and
+// the preview mp3 plays in an <audio> element without one.
+async function findTrack(song, artist) {
+  const attempts = [`${song} ${artist}`, song];
+
+  for (const term of attempts) {
+    try {
+      const response = await fetch(
+        "https://api.deezer.com/search?limit=1&q=" + encodeURIComponent(term)
+      );
+      if (!response.ok) continue;
+
+      const track = (await response.json())?.data?.[0];
+      if (!track?.preview) continue;
+
+      return {
+        title: track.title_short || track.title,
+        artist: track.artist?.name || artist,
+        artwork: track.album?.cover_big || track.album?.cover_medium || null,
+        preview: track.preview,
+        link: track.link || null,
+      };
+    } catch {
+      // try the next phrasing
+    }
+  }
+
+  return null;
+}
+
 async function handleVibe(payload, env, origin) {
   const id = Number(payload?.id);
   const name = typeof payload?.name === "string" ? payload.name.slice(0, 80) : "";
@@ -105,10 +139,22 @@ async function handleVibe(payload, env, origin) {
   }
 
   // A character's vibe never changes, so one Gemini call per character ever.
-  const cacheKey = `vibe:v1:${id}`;
+  const cacheKey = `vibe:v2:${id}`;
   if (env.RATE_LIMIT) {
     const cached = await env.RATE_LIMIT.get(cacheKey);
-    if (cached) return json({ ...JSON.parse(cached), cached: true }, 200, origin);
+
+    if (cached) {
+      const hit = JSON.parse(cached);
+
+      // Entries written before the track moved server-side have no track on
+      // them. Fill it in without spending another model call.
+      if (!hit.track) {
+        hit.track = await findTrack(hit.song, hit.artist);
+        await env.RATE_LIMIT.put(cacheKey, JSON.stringify(hit));
+      }
+
+      return json({ ...hit, cached: true }, 200, origin);
+    }
   }
 
   const facts = [
@@ -172,6 +218,7 @@ async function handleVibe(payload, env, origin) {
   }
 
   vibe.observations = (vibe.observations || []).slice(0, 3);
+  vibe.track = await findTrack(vibe.song, vibe.artist);
 
   if (env.RATE_LIMIT) {
     await env.RATE_LIMIT.put(cacheKey, JSON.stringify(vibe));

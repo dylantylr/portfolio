@@ -1,5 +1,4 @@
 const RM = "https://rickandmortyapi.com/api";
-const ITUNES = "https://itunes.apple.com/search";
 
 // The ones people actually want to pick, shown before any searching.
 export const FEATURED_IDS = [
@@ -44,33 +43,3 @@ export async function searchCharacters(term) {
   }
 }
 
-// iTunes gives a 30 second preview with no key and permissive CORS, which is
-// the only free option that will actually play in the browser.
-export async function findTrack(song, artist) {
-  const attempts = [`${song} ${artist}`, song];
-
-  for (const term of attempts) {
-    try {
-      const data = await getJSON(
-        `${ITUNES}?limit=1&media=music&entity=song&term=${encodeURIComponent(term)}`
-      );
-      const track = data.results?.[0];
-
-      if (track?.previewUrl) {
-        return {
-          title: track.trackName,
-          artist: track.artistName,
-          album: track.collectionName,
-          genre: track.primaryGenreName,
-          artwork: track.artworkUrl100?.replace("100x100", "300x300"),
-          preview: track.previewUrl,
-          link: track.trackViewUrl,
-        };
-      }
-    } catch {
-      // fall through to the next attempt
-    }
-  }
-
-  return null;
-}

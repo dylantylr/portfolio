@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import { ASSISTANT_URL } from "../constants/recruiter";
-import { findTrack, loadFeatured, searchCharacters } from "./api";
+import { loadFeatured, searchCharacters } from "./api";
 
 const focusRing =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
@@ -121,10 +121,9 @@ const VibeApp = () => {
       }
 
       setVibe(data);
+      // Resolved by the worker, so it does not vary with the visitor's network.
+      setTrack(data.track || null);
       setPhase("done");
-
-      // The track lookup is separate so a miss still leaves the pick readable.
-      findTrack(data.song, data.artist).then(setTrack).catch(() => {});
     } catch {
       setError("Could not reach the jukebox. Try again in a moment.");
       setPhase("error");
