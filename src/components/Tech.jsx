@@ -3,19 +3,19 @@ import { technologies } from "../constants";
 
 const Tech = () => {
   return (
-    <div className="flex flex-row flex-wrap justify-center gap-10">
+    <div className="flex flex-row flex-wrap justify-center gap-3">
       {technologies.map((technology) => (
         <div
           key={technology.name}
-          className="w-28 h-28 flex items-center justify-center rounded-full bg-tertiary shadow-md hover:shadow-lg transform hover:scale-105 transition-[transform,box-shadow] duration-300"
+          className="group flex h-24 w-24 items-center justify-center rounded-lg border border-line bg-tertiary transition-colors duration-300 hover:border-line-strong"
         >
           <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center transform hover:rotate-12 transition-transform duration-300">
             <img
-              className="w-16 h-16"
+              className="h-11 w-11 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
               src={technology.icon}
               alt={technology.name}
-              width={64}
-              height={64}
+              width={44}
+              height={44}
               loading="lazy"
               decoding="async"
             />

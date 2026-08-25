@@ -6,7 +6,7 @@ import { logo } from "../assets";
 import Chat from "./Chat";
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
 
 const BackIcon = () => (
   <svg
@@ -99,7 +99,7 @@ const RecruiterApp = () => {
                   href={resumeUrl}
                   download
                   aria-label='Download resume (PDF)'
-                  className={`${actionBase} bg-[#915EFF] text-white hover:bg-[#7d4ae8] ${focusRing}`}
+                  className={`${actionBase} bg-accent text-primary hover:bg-accent-dim ${focusRing}`}
                 >
                   <DownloadIcon />
                   Download CV
@@ -118,7 +118,7 @@ const RecruiterApp = () => {
                         ? `${link.title} (opens in a new tab)`
                         : link.title
                     }
-                    className={`${actionBase} border border-white/10 bg-tertiary text-white-100 hover:border-[#915EFF] hover:text-white ${focusRing}`}
+                    className={`${actionBase} border border-white/10 bg-tertiary text-white-100 hover:border-accent hover:text-white ${focusRing}`}
                   >
                     {link.title}
                   </a>

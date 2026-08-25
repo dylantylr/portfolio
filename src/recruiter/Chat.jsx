@@ -7,7 +7,7 @@ import {
 } from "../constants/recruiter";
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary";
 
 const SendIcon = () => (
   <svg
@@ -32,7 +32,7 @@ const Bubble = ({ role, text, error }) => {
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-[15px] leading-relaxed break-words ${
           isUser
-            ? "bg-[#915EFF] text-white"
+            ? "bg-accent text-white"
             : error
             ? "bg-[#3a1e1e] text-[#ffc9c9]"
             : "bg-black-100 text-white-100"
@@ -137,7 +137,7 @@ const Chat = () => {
                   type='button'
                   onClick={() => send(q.prompt)}
                   disabled={loading}
-                  className={`rounded-full border border-white/10 bg-black-100 px-4 py-2 text-[14px] text-white-100 transition-colors duration-200 hover:border-[#915EFF] hover:text-white disabled:opacity-50 touch-manipulation ${focusRing}`}
+                  className={`rounded-full border border-white/10 bg-black-100 px-4 py-2 text-[14px] text-white-100 transition-colors duration-200 hover:border-accent hover:text-white disabled:opacity-50 touch-manipulation ${focusRing}`}
                 >
                   {q.label}
                 </button>
@@ -203,7 +203,7 @@ const Chat = () => {
           <button
             type='submit'
             disabled={loading || exhausted || !input.trim()}
-            className={`inline-flex items-center gap-2 rounded-lg bg-[#915EFF] px-5 py-3 text-[15px] font-semibold text-white transition-colors duration-200 hover:bg-[#7d4ae8] disabled:cursor-not-allowed disabled:opacity-50 touch-manipulation ${focusRing}`}
+            className={`inline-flex items-center gap-2 rounded-lg bg-accent px-5 py-3 text-[15px] font-semibold text-primary transition-colors duration-200 hover:bg-accent-dim disabled:cursor-not-allowed disabled:opacity-50 touch-manipulation ${focusRing}`}
           >
             <span className='hidden sm:inline'>Send</span>
             <SendIcon />

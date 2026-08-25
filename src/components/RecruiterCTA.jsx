@@ -22,7 +22,7 @@ const RecruiterCTA = () => (
   <a
     href='/recruiter/'
     aria-label='For recruiters: ask an AI assistant about Dylan'
-    className='fixed bottom-5 right-5 z-30 inline-flex items-center gap-2 rounded-full border border-[#915EFF]/40 bg-black-100/95 px-4 py-3 text-[14px] font-semibold text-white shadow-card backdrop-blur transition-colors duration-200 hover:border-[#915EFF] hover:bg-[#915EFF] touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-primary'
+    className='fixed bottom-5 right-5 z-30 inline-flex items-center gap-2 rounded-full border border-line-strong bg-black-100/95 px-4 py-3 text-[14px] font-semibold text-white shadow-card backdrop-blur transition-colors duration-200 hover:border-accent hover:bg-accent touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary'
   >
     <SparkIcon />
     <span>

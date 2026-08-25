@@ -38,7 +38,7 @@ const ProjectCard = ({
         tiltMaxAngleY={45}
         scale={1}
         transitionSpeed={450}
-        className='sm:w-[360px] w-full'
+        className='w-full'
       >
         {/* The whole card is the link, so there is nothing interactive nested
             inside it. aria-label keeps the accessible name short. */}
@@ -47,7 +47,7 @@ const ProjectCard = ({
           target='_blank'
           rel='noopener noreferrer'
           aria-label={`${name} - view credential (opens in a new tab)`}
-          className='group flex h-full flex-col bg-tertiary p-5 rounded-2xl ring-1 ring-white/5 transition duration-300 hover:ring-[#915EFF] hover:shadow-card touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF] focus-visible:ring-offset-2 focus-visible:ring-offset-primary'
+          className='group flex h-full flex-col rounded-xl border border-line bg-tertiary p-5 transition-colors duration-300 hover:border-accent touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-primary'
         >
           <div className='relative w-full h-[230px]'>
             <img
@@ -63,10 +63,10 @@ const ProjectCard = ({
           </div>
 
           <div className='mt-5'>
-            <h3 className='text-white font-bold text-[24px] text-balance'>
+            <h3 className='text-[17px] font-semibold text-white text-balance'>
               {name}
             </h3>
-            <p className='mt-2 text-secondary text-[14px] text-pretty break-words'>
+            <p className='mt-2 text-[14px] leading-relaxed text-secondary text-pretty break-words'>
               {description}
             </p>
           </div>
@@ -75,16 +75,16 @@ const ProjectCard = ({
             {tags.map((tag) => (
               <p
                 key={`${name}-${tag.name}`}
-                className={`text-[14px] ${tag.color}`}
+                className='rounded border border-line px-2 py-0.5 font-mono text-[12px] text-secondary'
               >
-                #{tag.name}
+                {tag.name}
               </p>
             ))}
           </div>
 
           <span
             aria-hidden='true'
-            className='mt-5 inline-flex items-center gap-2 text-[14px] font-medium text-secondary transition-colors duration-300 group-hover:text-white'
+            className='mt-5 inline-flex items-center gap-2 font-mono text-[12px] text-secondary transition-colors duration-300 group-hover:text-accent'
           >
             View credential
             <ExternalLinkIcon />
@@ -99,9 +99,9 @@ const Works = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText} `}>My work</p>
-        <h2 className={`${styles.sectionHeadText} text-balance`}>
-          Licenses and Certifications.
+        <p className={styles.sectionSubText}>Credentials</p>
+        <h2 className={`${styles.sectionHeadText} mt-3 text-balance`}>
+          Licenses and certifications
         </h2>
       </motion.div>
 
@@ -115,7 +115,7 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className='mt-20 flex flex-wrap gap-7 place-content-center items-stretch'>
+      <div className='mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
         {projects.map((project, index) => (
           <ProjectCard key={`project-${index}`} index={index} {...project} />
         ))}

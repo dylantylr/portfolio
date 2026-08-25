@@ -57,6 +57,34 @@ import {
   // /portfolio/ base path on GitHub Pages.
   export const resumeUrl = "/Dylan_Taylor_Resume.pdf";
 
+  export const metrics = [
+    {
+      value: "83%",
+      label:
+        "Cut off FedRAMP service onboarding, from 60 developer-days to under 10",
+    },
+    {
+      value: "80GB+",
+      label:
+        "Frontend monorepo standardized onto a shared configuration SDK",
+    },
+    {
+      value: "$14K/mo",
+      label:
+        "Infrastructure spend reclaimed by automating stale policy cleanup",
+    },
+  ];
+
+  export const focusAreas = [
+    "Backend engineering",
+    "Platform & developer tooling",
+    "SDK design",
+    "Regulated cloud (FedRAMP)",
+    "CI/CD & release automation",
+    "Data & BI",
+  ];
+
+
   const services = [
     {
       title: "Software Engineer",

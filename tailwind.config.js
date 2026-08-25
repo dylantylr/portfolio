@@ -4,22 +4,30 @@ module.exports = {
   mode: "jit",
   theme: {
     extend: {
+      // Mapped onto the CSS variables in index.css, so the existing token
+      // names keep working and the whole palette moves in one place.
       colors: {
-        primary: "#050816",
-        secondary: "#aaa6c3",
-        tertiary: "#151030",
-        "black-100": "#100d25",
-        "black-200": "#090325",
-        "white-100": "#f3f3f3",
+        primary: "var(--bg)",
+        secondary: "var(--text-dim)",
+        tertiary: "var(--surface)",
+        "black-100": "var(--surface-2)",
+        "black-200": "var(--surface)",
+        "white-100": "var(--text)",
+        accent: "var(--accent)",
+        "accent-dim": "var(--accent-dim)",
+        line: "var(--line)",
+        "line-strong": "var(--line-strong)",
+      },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "sans-serif"],
+        mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        card: "0px 35px 120px -15px #211e35",
+        // Hairline lift rather than the template's heavy purple bloom.
+        card: "0 1px 0 0 rgba(255,255,255,0.04), 0 18px 40px -24px rgba(0,0,0,0.9)",
       },
       screens: {
         xs: "450px",
-      },
-      backgroundImage: {
-        "hero-pattern": "url('/src/assets/herobg.png')",
       },
     },
   },
